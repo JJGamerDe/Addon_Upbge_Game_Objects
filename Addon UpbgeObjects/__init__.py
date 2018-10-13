@@ -23,7 +23,7 @@ bl_info = {
     "author": "RafaelTavares(EndSSGames)",
     "version": (0, 1),
     "blender": (2, 79, 6),
-    "location": "View3D > Tools > Upbge Objects",
+    "location": "View3D > Tools > Upbge Game Objects Panel ",
     "description": "adds several game objects for free use",
     "warning": "",
     "wiki_url": "",
