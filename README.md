@@ -1,3 +1,3 @@
 Hi! this is my first shared addon in it I want to create objects for the UPBGE, which is 100% free to use...
 
-![alt text](https://github.com/EndSSgamesStudio/Addon_Upbge_Game_Objects/blob/master/0.1.png)
+![alt text](https://github.com/EndSSgamesStudio/Addon_Upbge_Game_Objects/blob/master/doc/readme/0.1.png)
