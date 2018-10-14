@@ -1,4 +1,4 @@
-'''
+"""
 Copyright (C) 2018 Rafael Tavares
 endssgamesstudio@bol.com.br
 
@@ -16,169 +16,69 @@ Created by Rafael Tavares
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
+"""
 
 bl_info = {
     "name": "Upbge Game Objects",
-    "author": "RafaelTavares(EndSSGames)",
-    "version": (0, 1),
+    "author": "EndSSGames",
+    "version": (0, 2),
     "blender": (2, 79, 6),
-    "location": "View3D > Tools > Upbge Game Objects Panel ",
-    "description": "adds several game objects for free use",
+    "location": "View3D > Tools > Upbge Game Objects Panel",
+    "description": "adds several game objects",
     "warning": "",
-    "wiki_url": "",
-    "tracker_url": "",
-    "category": "UPBGE"}
+    "wiki_url": "https://github.com/EndSSgamesStudio/Addon_Upbge_Game_Objects",
+    "tracker_url": "https://github.com/EndSSgamesStudio/Addon_Upbge_Game_Objects/issues",
+    "category": "Game Engine"}
 
-import bpy
+import bpy, imp
 from math import *
 import os
-############################################
-class PlayerFpsOperator(bpy.types.Operator):
-    #"""ToolTip of UpbgeGameObjectsOperator"""
-    bl_idname = "player.objects_operator"
-    bl_label = "Upbge Game Objects"
-    bl_description = 'Generate a FPS PLAYER'
-    bl_options = {'REGISTER', "UNDO"}
- 
-    def execute(self, context):
-        self.report({'INFO'}, "Sucess!")
-        
-        PlayerFps()
-        
-        return {'FINISHED'}
-    
-    #def executeZombie(self, context,):
-        #self.report({'INFO'}, "Sucess!")
-        
-        #Zombie()
-        
-        #return {'FINISHED'}
-#########################################		
-class ZombieOperator(bpy.types.Operator):
-    bl_idname = "zombie.objects_operator"
-    bl_label = "Upbge Game Objects"
-    bl_description = "Generate a Zombie"
-    bl_options = {'REGISTER', "UNDO"}
-	
-    
-    def execute(self, context):
-        self.report({'INFO'}, "Sucess!!")
-        
-        Zombie()
-        
-        return {'FINISHED'}
-#########################################
-class FreeCameraOperator(bpy.types.Operator):
-    bl_idname = "freecamera.objects_operator"
-    bl_label = "Upbge Game Objects"
-    bl_description = "Generate a free camera"
-    bl_options = {'REGISTER', "UNDO"}
-	
-    
-    def execute(self, context):
-        self.report({'INFO'}, "Sucess!!")
-        
-        FreeCamera()
-        
-        return {'FINISHED'}
-    
-#########################################
-class CameraOrbitOperator(bpy.types.Operator):
-    bl_idname = "orbitcamera.objects_operator"
-    bl_label = "Upbge Game Objects"
-    bl_description = "Generate a Camera Orbital"
-    bl_options = {'REGISTER', "UNDO"}
-	
-    
-    def execute(self, context):
-        self.report({'INFO'}, "Sucess!!")
-        
-        orbitcamera()
-        
-        return {'FINISHED'}
-
-#####################################################################################	
 
 
-def PlayerFps():
-    
-	obj = loadAsset('objects.blend', ('player_body', 'player_camera', 'player_head'))
-	return obj
+#from . import defs_game_objects
+from . import class_game_objects
 
-def Zombie():
-    
-	obj = loadAsset('objects.blend', ('Zombie'))
-	return obj
-
-def FreeCamera():
-    
-    obj = loadAsset('objects.blend', ('Free_CameraPlayer'))
-    return obj
-
-def orbitcamera():
-
-    obj = loadAsset('objects.blend', ("Camera_Orbit", "Orbit_Camera"))
-    return obj
-    
-    
-#####################################################################################	
-#####################################################################################	
-def loadAsset(filename, objList):
-
-	scriptPath = os.path.realpath(__file__)
-	assetPath = os.path.join(os.path.dirname(scriptPath), 'asset', filename)
-
-	try:
-		with bpy.data.libraries.load(assetPath)	as (data_from, data_to):
-			data_to.objects = [name for name in data_from.objects if name in objList]
-	except:
-		return 'What you mean? this asset does not exist!'
-
-	retObj = None
-	for obj in data_to.objects:
-		bpy.context.scene.objects.link(obj)
-		retObj = obj
-
-	return retObj
-####################################################################################################
 ####################################################################################################	
 class UpbgeGameObjectsPanel(bpy.types.Panel):
-    """Docstring of UpbgeGameObjectsPanel"""
-    bl_idname = "VIEW3D_PT_upbge_game_objects"
-    bl_label = "Upbge Game Objects Panel"
-    
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'TOOLS'
-    bl_category = 'Tools'
-    
-####################################################################################################
-    def draw(self, context):
-        layout = self.layout
+	"""Docstring of UpbgeGameObjectsPanel"""
+	bl_idname = "VIEW3D_PT_upbge_game_objects"
+	bl_label = "Upbge Game Objects Panel"
+	
+	bl_space_type = 'VIEW_3D'
+	bl_region_type = 'TOOLS'
+	bl_category = 'Tools'
+	
+	def draw(self, context):
+		layout = self.layout
 		
-		#row = layout.row(align = True)
-        layout.operator(PlayerFpsOperator.bl_idname, text = "FPS PLAYER", icon = 'ARMATURE_DATA')
-      	#row = layout.row()
-        layout.operator(ZombieOperator.bl_idname, text = "Zombie",icon = 'POSE_DATA')
+		#row = layout(aling = true)
+		layout.operator(class_game_objects.PlayerFpsOperator.bl_idname, text = "FPS PLAYER", icon = 'ARMATURE_DATA')
+		#row = layout.row(
+		layout.operator(class_game_objects.ZombieOperator.bl_idname, text = "Zombie",icon = 'POSE_DATA')
 		#ZombieOperator.bl_idname
-        layout.operator(FreeCameraOperator.bl_idname, text = "Free Camera",icon = 'SCENE')
-        #boing
-        layout.operator(CameraOrbitOperator.bl_idname, text = "Camera Orbit",icon = 'CAMERA_DATA')
+		layout.operator(class_game_objects.FreeCameraOperator.bl_idname, text = "Free Camera",icon = 'SCENE')
+		#Orbit
+		layout.operator(class_game_objects.CameraOrbitOperator.bl_idname, text = "Camera Orbit",icon = 'CAMERA_DATA')
+		#Third
+		layout.operator(class_game_objects.ThirdpersonplayerOperator.bl_idname, text = "Third Person Player",icon = 'OUTLINER_DATA_ARMATURE')
+		
+		
+		
+	
+####################################################################################################
+    
     
         
 def register():
     bpy.utils.register_module(__name__)
-    #bpy.utils.register_class(PlayerFpsOperator)
-	#bpy.utils.register_class(ZombieOperator)
-    #bpy.utils.register_class(UpbgeGameObjectsPanel)
+	
 def unregister():
+
     bpy.utils.unregister_module(__name__)
-    #bpy.utils.unregister_class(PlayerFpsOperator)
-	#bpy.utils.unregister_class(ZombieOperator)
-    #bpy.utils.unregister_class(UpbgeGameObjectsPanel)
     
 if __name__ == "__main__":
     register()
     
     
+	
     #PlayerFpsOperator
