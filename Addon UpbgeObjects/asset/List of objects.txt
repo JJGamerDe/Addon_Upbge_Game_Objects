@@ -1,4 +1,0 @@
-player: ("player_body, player_head, player_camera")
-Zombie: ("Zombie")
-Free Camera: ("Free_CameraPlayer") 
-Orbit Camera: ("Camera_Orbit, Orbit_Camera")
