@@ -1,3 +1,5 @@
+[Use Addon now](https://github.com/EndSSgamesStudio/Addon_Upbge_Game_Objects/releases)
+
 Hi! this is my first shared addon in it I want to create objects for the UPBGE, which is 100% free to use...
 
 Anyone who wants to help me, please tell me, any help is welcome!
